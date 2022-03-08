@@ -1,30 +1,148 @@
-# Hello website!
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <!--
 
-This is a basic HTML starter project you can build on however you like. No need to save. While you develop your site, your changes will happen ✨ immediately in the preview window. On the left you'll see the files that make up your site, including HTML, JavaScript, and CSS. You can upload assets like images or audio in `assets`. The rest is up to you and your imagination. 🦄
+Nick Montfort
+ Original Python program:
+ 8 January 2009, Taroko Gorge National Park, Taiwan and Eva Air Flight 28
 
-## What's in this project?
+Copyright (c) 2009 Nick Montfort <nickm@nickm.com>
 
-← `README.md`: That's this file, where you can tell people what your cool website does and how you built it.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
-← `index.html`: This is the main web page for your site. The HTML defines the structure and content of the page using _elements_. You'll see references in the HTML to the JS and CSS files. Try clicking the image in the center of the page!
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-← `style.css`: CSS files add styling rules to your content. The CSS applies styles to the elements in your HTML page. The style rules also make the image move when you click it.
-
-← `script.js`: If you're feeling fancy you can add interactivity to your site with JavaScript. The code in the JavaScript file runs when the page loads, and when the visitor clicks the button you can add below.
-
-Open each file and check out the comments (in gray) for more info.
-
-## Try this next 🏗️
-
-Take a look in `TODO.md` for next steps you can try out in your new site!
-
-___Want a minimal version of this project to build your own website? Check out [Blank Website](https://glitch.com/edit/#!/remix/glitch-blank-website)!___
-
-![Glitch](https://cdn.glitch.com/a9975ea6-8949-4bab-addb-8a95021dc2da%2FLogo_Color.svg?v=1602781328576)
-
-## You built this with Glitch!
-
-[Glitch](https://glitch.com) is a friendly community where millions of people come together to build web apps and websites.
-
-- Need more help? [Check out our Help Center](https://help.glitch.com/) for answers to any common questions.
-- Ready to make it official? [Become a paid Glitch member](https://glitch.com/pricing) to boost your app with private sharing, more storage and memory, domains and more.
+-->
+    <style type="text/css">
+      /* <![CDATA[ */
+      body {
+        background: #000088;
+        color: #ffffff;
+        margin: 0 24pt 0 24pt;
+        font-family: Optima, sans-serif;
+        font-size: 13pt;
+      }
+      div {
+        height: 16pt;
+      }
+      a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+      /* ]]> */
+    </style>
+    <script language="JavaScript" type="text/javascript">
+      var t = 0;
+      var n = 0;
+      var paths = 0;
+      var above = "bloke,mate,knacker".split(",");
+      var below =
+        "ute,Commo,Lux,mudpig,job site,pooey,oval,bloke, shopping centre, servo pie, cold crowny,nail gun,jet ski, tinny".split(
+          ","
+        );
+      var trans = "skid,fight,jobs up,work".split(",");
+      var imper =
+        "Fight at,Inhabit,Get blind at,Talk about cars at,Enter, Get kicked out of, Piss up your pay at,Listen to Triple M at, Beleive the Herald Sun at";
+      imper = imper.split(",");
+      var intrans =
+        "drink,get blind,fuck eyed,shagged,hold,dream,yell, emote, supress".split(
+          ","
+        );
+      var s = "s,".split(",");
+      var texture = "local".split(",");
+      function rand_range(max) {
+        return Math.floor(Math.random() * (max + 1));
+      }
+      function choose(array) {
+        return array[rand_range(array.length - 1)];
+      }
+      function path() {
+        var p = rand_range(1);
+        var words = choose(above);
+        if (words == "forest" && rand_range(3) == 1) {
+          words = "monkeys " + choose(trans);
+        } else {
+          words += s[p] + " " + choose(trans) + s[(p + 1) % 2];
+        }
+        words += " the " + choose(below) + choose(s) + ".";
+        return words;
+      }
+      function site() {
+        var words = "";
+        if (rand_range(2) == 1) {
+          words += choose(above);
+        } else {
+          words += choose(below);
+        }
+        words += "s " + choose(intrans) + ".";
+        return words;
+      }
+      function cave() {
+        var adjs = ("," + choose(texture) + " footy club").split(",");
+        var target = 1 + rand_range(3);
+        while (adjs.length > target) {
+          adjs.splice(rand_range(adjs.length), 1);
+        }
+        var words =
+          "\u00a0\u00a0" + choose(imper) + " the " + adjs.join(" ") + " \u2014";
+        return words;
+      }
+      function do_line() {
+        var main = document.getElementById("main");
+        if (t <= 25) {
+          t += 1;
+        } else {
+          main.removeChild(document.getElementById("main").firstChild);
+        }
+        if (n === 0) {
+          text = " ";
+        } else if (n == 1) {
+          paths = 2 + rand_range(2);
+          text = path();
+        } else if (n < paths) {
+          text = site();
+        } else if (n == paths) {
+          text = path();
+        } else if (n == paths + 1) {
+          text = " ";
+        } else if (n == paths + 2) {
+          text = cave();
+        } else {
+          text = " ";
+          n = 0;
+        }
+        n += 1;
+        text =
+          text.substring(0, 1).toUpperCase() + text.substring(1, text.length);
+        last = document.createElement("div");
+        last.appendChild(document.createTextNode(text));
+        main.appendChild(last);
+      }
+      function poem() {
+        setInterval(do_line, 1200);
+      }
+    </script>
+    <title>Smoko Gaz</title>
+  </head>
+  <body onload="poem()">
+    <div style="float: right; margin-top: 12px; color: #ff0000; height: 60pt">
+      <div>Smoko Gaz</div>
+      <div>
+        <a href="https://www.instagram.com/gerardstarlingphoto/"
+          >Gerard Starling</a
+        >
+      </div>
+    </div>
+    <div id="main"></div>
+  </body>
+</html>
